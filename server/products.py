@@ -23,21 +23,21 @@ def get_all_shops():
     response.headers["Content-Type"] = "application/json"
     return response
 
-@products_blueprint.route('/shops/<int:shop_id>', methods=['GET'])
-def get_shop_by_id(shop_id):
+@products_blueprint.route('/shops/<int:id>')
+def get_shop_by_id(id):
     shop = Shop.query.filter_by(id=id).first()
-    # if shop is None:
-    #     return make_response(jsonify({'error': 'Shop not found'}), 404)
-    shop_dict = {
-        'id': shop.id,
-        'name': shop.name,
-        'location': shop.location
-    }
-    response = make_response(
-        jsonify(shop_dict),
-        200
-    )
+    if shop is None:
+        response = make_response(jsonify({'error': 'Shop not found'}), 404)
+    else:
+        shop_dict = {
+            'id': shop.id,
+            'name': shop.name,
+            'location': shop.location
+        }
+        
+        response = make_response(jsonify(shop_dict), 200)
     response.headers["Content-Type"] = "application/json"
+
     return response
 
 @products_blueprint.route("/addshop", methods=["POST"])
@@ -103,24 +103,25 @@ def get_all_products():
     response.headers["Content-Type"] = "application/json"
     return response
 
-@products_blueprint.route('/products/<int:product_id>', methods=['GET'])
-def get_product_by_id(product_id):
+@products_blueprint.route('/products/<int:id>')
+def get_product_by_id(id):
     product = Product.query.filter_by(id=id).first()
-    # if shop is None:
-    #     return make_response(jsonify({'error': 'Shop not found'}), 404)
-    product_dict = {
+    if product is None:
+        response = make_response(jsonify({'error': 'Product not found'}), 404)
+    else:
+        product_dict = {
         'id': product.id,
         'name': product.name,
         'description': product.description,
         'product_status': product.status,
         'price': product.price
-    }
-    response = make_response(
-        jsonify(product_dict),
-        200
-    )
+        }
+
+        response = make_response(jsonify(product_dict), 200)
     response.headers["Content-Type"] = "application/json"
+
     return response
+    
 
 @products_blueprint.route("/addproduct", methods=["POST"])
 def post_product():
@@ -188,20 +189,20 @@ def get_all_categories():
     response.headers["Content-Type"] = "application/json"
     return response
 
-@products_blueprint.route('/categories/<int:category_id>', methods=['GET'])
-def get_category_by_id(category_id):
+@products_blueprint.route('/categories/<int:id>')
+def get_category_by_id(id):
     category = Category.query.filter_by(id=id).first()
-    # if shop is None:
-    #     return make_response(jsonify({'error': 'Shop not found'}), 404)
-    category_dict = {
-        'id': category.id,
-        'name': category.name,
-    }
-    response = make_response(
-        jsonify(category_dict),
-        200
-    )
+    if category is None:
+        response = make_response(jsonify({'error': 'Category not found'}), 404)
+    else:
+        category_dict = {
+            'id': category.id,
+            'name': category.name
+        }
+        
+        response = make_response(jsonify(category_dict), 200)
     response.headers["Content-Type"] = "application/json"
+
     return response
 
 @products_blueprint.route("/addcategory", methods=["POST"])
@@ -261,21 +262,21 @@ def get_all_images():
     response.headers["Content-Type"] = "application/json"
     return response
 
-@products_blueprint.route('/images/<int:image_id>', methods=['GET'])
-def get_image_by_id(image_id):
+@products_blueprint.route('/images/<int:id>')
+def get_image_by_id(id):
     image = Image.query.filter_by(id=id).first()
-    # if shop is None:
-    #     return make_response(jsonify({'error': 'Shop not found'}), 404)
-    image_dict = {
-        'id': image.id,
-        'url': image.url,
-        'description': image.description
-    }
-    response = make_response(
-        jsonify(image_dict),
-        200
-    )
+    if image is None:
+        response = make_response(jsonify({'error': 'Image not found'}), 404)
+    else:
+        image_dict = {
+            'id': image.id,
+            'url': image.url,
+            'description': image.description
+        }
+        
+        response = make_response(jsonify(image_dict), 200)
     response.headers["Content-Type"] = "application/json"
+
     return response
 
 @products_blueprint.route("/addimage", methods=["POST"])

@@ -25,24 +25,24 @@ def get_all_customers():
     response.headers["Content-Type"] = "application/json"
     return response
 
-@users_blueprint.route('/customers/<int:customer_id>', methods=['GET'])
-def get_customer_by_id(customer_id):
+@users_blueprint.route('/customers/<int:id>')
+def get_customer_by_id(id):
     customer = Customer.query.filter_by(id=id).first()
-    # if shop is None:
-    #     return make_response(jsonify({'error': 'Shop not found'}), 404)
-    customer_dict = {
+    if customer is None:
+        response = make_response(jsonify({'error': 'Customer not found'}), 404)
+    else:
+        customer_dict = {
             'id': customer.id,
             'first_name': customer.first_name,
             'last_name': customer.last_name,
             'profile_picture': customer.profile_picture,
             'location': customer.location,
             'gender': customer.gender 
-    }
-    response = make_response(
-        jsonify(customer_dict),
-        200
-    )
+        }
+        
+        response = make_response(jsonify(customer_dict), 200)
     response.headers["Content-Type"] = "application/json"
+
     return response
 
 @users_blueprint.route("/addcustomer", methods=["POST"])
@@ -117,24 +117,24 @@ def get_all_shopowners():
     response.headers["Content-Type"] = "application/json"
     return response
 
-@users_blueprint.route('/shopowners/<int:shopowner_id>', methods=['GET'])
-def get_shopowner_by_id(shopowner_id):
+@users_blueprint.route('/shopowners/<int:id>')
+def get_shopowner_by_id(id):
     shopowner = Shopowner.query.filter_by(id=id).first()
-    # if shop is None:
-    #     return make_response(jsonify({'error': 'Shop not found'}), 404)
-    shopowner_dict = {
+    if shopowner is None:
+        response = make_response(jsonify({'error': 'Shopowner not found'}), 404)
+    else:
+        shopowner_dict = {
             'id': shopowner.id,
             'first_name': shopowner.first_name,
             'last_name': shopowner.last_name,
             'profile_picture': shopowner.profile_picture,
             'location': shopowner.location,
             'gender': shopowner.gender 
-    }
-    response = make_response(
-        jsonify(shopowner_dict),
-        200
-    )
+        }
+        
+        response = make_response(jsonify(shopowner_dict), 200)
     response.headers["Content-Type"] = "application/json"
+
     return response
 
 @users_blueprint.route("/addshopowner", methods=["POST"])
@@ -209,24 +209,24 @@ def get_all_riders():
     response.headers["Content-Type"] = "application/json"
     return response
 
-@users_blueprint.route('/riders/<int:rider_id>', methods=['GET'])
-def get_rider_by_id(rider_id):
+@users_blueprint.route('/riders/<int:id>')
+def get_rider_by_id(id):
     rider = Rider.query.filter_by(id=id).first()
-    # if shop is None:
-    #     return make_response(jsonify({'error': 'Shop not found'}), 404)
-    rider_dict = {
+    if rider is None:
+        response = make_response(jsonify({'error': 'Rider not found'}), 404)
+    else:
+        rider_dict = {
             'id': rider.id,
             'first_name': rider.first_name,
             'last_name': rider.last_name,
             'profile_picture': rider.profile_picture,
             'location': rider.location,
             'gender': rider.gender 
-    }
-    response = make_response(
-        jsonify(rider_dict),
-        200
-    )
+        }
+        
+        response = make_response(jsonify(rider), 200)
     response.headers["Content-Type"] = "application/json"
+
     return response
 
 @users_blueprint.route("/addrider", methods=["POST"])
